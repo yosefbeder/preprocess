@@ -1,11 +1,10 @@
 import re
 
-from tokenizer import tokenize
+from tokenizer import TokenStream
 from constants import PS_OR_PE, DIACRITIC
-from typing import List
 
 
-def normalize(tokens: List[str]) -> List[str]:
+def normalize(tokens: TokenStream) -> TokenStream:
     normalized = []
     for token in tokens:
         # a diacritic that starts a word gets placed in a single token
@@ -21,11 +20,10 @@ def normalize(tokens: List[str]) -> List[str]:
         # alef
         token = re.sub(r'[أإآ]', 'ا', token)
         normalized.append(token)
-    return normalized
+    return TokenStream(normalized)
 
-
-print(tokenize("(السلام) [عليكم] {ورحمة} الله"))
-print(normalize(tokenize("(السلام) [عليكم] {ورحمة} الله")))
-print(normalize(tokenize("{هذا} «يوسف» عبد الفتاح")))
-print(normalize(tokenize("أَهْلاً وسَهلاً بِكُم هلَّا")))
-print(normalize(tokenize("ىأآإئؤة")))
+# print(tokenize("(السلام) [عليكم] {ورحمة} الله"))
+# print(normalize(tokenize("(السلام) [عليكم] {ورحمة} الله")))
+# print(normalize(tokenize("{هذا} «يوسف» عبد الفتاح")))
+# print(normalize(tokenize("أَهْلاً وسَهلاً بِكُم هلَّا")))
+# print(normalize(tokenize("ىأآإئؤة")))

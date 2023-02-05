@@ -4,6 +4,35 @@ from constants import DIACRITIC
 from typing import List
 
 
+class TokenStream:
+    def __init__(self, tokens: List[str]):
+        self.tokens = tokens
+
+    def __hash__(self):
+        prime = 31
+        result = 1
+        for token in self.tokens:
+            result = result * prime + hash(token)
+        return result
+
+    def __eq__(self, other):
+        if self is other:
+            return True
+        length = len(self.tokens)
+        if length != len(other.tokens):
+            return False
+        for i in range(0, length):
+            if self.tokens[i] != other.tokens[i]:
+                return False
+        return True
+
+    def __iter__(self):
+        return iter(self.tokens)
+
+    def __str__(self):
+        return str(self.tokens)
+
+
 class Tokenizer:
     def __init__(self, text: str):
         self.start = 0
@@ -38,7 +67,7 @@ class Tokenizer:
     def at_end(self):
         return self.current >= len(self.text)
 
-    def tokenize(self) -> List[str]:
+    def tokenize(self) -> TokenStream:
         while True:
             # whitespaces and newlines
             cur = self.cur_char()
@@ -98,8 +127,8 @@ class Tokenizer:
             else:
                 self.consume()
                 self.pop()
-        return self.tokens
+        return TokenStream(self.tokens)
 
 
-def tokenize(text: str) -> List[str]:
+def tokenize(text: str) -> TokenStream:
     return Tokenizer(text).tokenize()
