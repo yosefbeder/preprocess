@@ -2,9 +2,10 @@ import re
 
 from tokenizer import tokenize
 from constants import PS_OR_PE, DIACRITIC
+from typing import List
 
 
-def normalize(tokens):
+def normalize(tokens: List[str]) -> List[str]:
     normalized = []
     for token in tokens:
         # a diacritic that starts a word gets placed in a single token
@@ -13,8 +14,8 @@ def normalize(tokens):
         # diacritics
         token = re.sub(DIACRITIC, '', token)
         # dots
-        token = token.replace('ى', 'ي')\
-                     .replace('ة', 'ه')
+        token = token.replace('ى', 'ي') \
+            .replace('ة', 'ه')
         # alef typing mistakes
         token = re.sub(r'اا|ااا', 'ا', token)
         # alef

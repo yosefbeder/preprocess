@@ -1,6 +1,7 @@
 import re
 
 from constants import DIACRITIC
+from typing import List
 
 
 class Tokenizer:
@@ -14,13 +15,13 @@ class Tokenizer:
         self.current += 1
         return self.cur_char()
 
-    def get(self, idx):
+    def get(self, idx: int):
         if idx >= len(self.text):
             return None
         return self.text[idx]
 
     # note: can return None
-    def peek(self, amount):
+    def peek(self, amount: int):
         return self.get(self.current + amount)
 
     def pop(self):
@@ -37,7 +38,7 @@ class Tokenizer:
     def at_end(self):
         return self.current >= len(self.text)
 
-    def tokenize(self):
+    def tokenize(self) -> List[str]:
         while True:
             # whitespaces and newlines
             cur = self.cur_char()
@@ -100,5 +101,5 @@ class Tokenizer:
         return self.tokens
 
 
-def tokenize(text):
+def tokenize(text: str) -> List[str]:
     return Tokenizer(text).tokenize()
