@@ -12,3 +12,4 @@ PS_OR_PE = r'\u0028|\u0029|\u005b|\u005d|\u007b|\u007d|\u00ab|\u00bb|\u0f3a|\u0f
            r'|\uff08|\uff09|\uff3b|\uff3d|\uff5b|\uff5d|\uff5f|\uff60|\uff62|\uff63'
 # source: https://regex101.com/library/eA5kA6?page=1
 DIACRITIC = r'[\u064B-\u0652]'
+SENTENCE_TERMINATOR = r'[؟!.،:؛]'

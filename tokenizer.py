@@ -4,33 +4,34 @@ from constants import DIACRITIC
 from typing import List
 
 
-class TokenStream:
+class TokenStream(list):
     def __init__(self, tokens: List[str]):
-        self.tokens = tokens
+        super().__init__(tokens)
 
     def __hash__(self):
         prime = 31
         result = 1
-        for token in self.tokens:
+        for token in self:
             result = result * prime + hash(token)
         return result
 
     def __eq__(self, other):
         if self is other:
             return True
-        length = len(self.tokens)
-        if length != len(other.tokens):
+        length = len(self)
+        if length != len(other):
             return False
         for i in range(0, length):
-            if self.tokens[i] != other.tokens[i]:
+            if self[i] != other[i]:
                 return False
         return True
 
-    def __iter__(self):
-        return iter(self.tokens)
-
-    def __str__(self):
-        return str(self.tokens)
+    def __getitem__(self, key):
+        item = super().__getitem__(key)
+        if isinstance(item, List):
+            return TokenStream(item)
+        else:
+            return item
 
 
 class Tokenizer:
